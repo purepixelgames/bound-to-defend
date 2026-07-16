@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bound to Defend | Endless Wave Defense</title>
+<meta name="description" content="Bound to Defend is an endless wave defense game that blends roguelite progression with persistent loot grinding. Play free on itch.io.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   BOUND TO DEFEND, site theme
+   Palette pulled from the game's forest menu art
+   ============================================================ */
+:root{
+  --grass:        #79bd3f;
+  --grass-dark:   #5f9c2e;
+  --forest:       #24401c;
+  --forest-deep:  #16290f;
+  --wood:         #8a5a33;
+  --wood-dark:    #5c3a20;
+  --wood-edge:    #3e2a1d;
+  --cream:        #f7ebd3;
+  --cream-dim:    #e3d3b4;
+  --badge-red:    #d93a2b;
+  --gold:         #f2b441;
+  --sky:          #a8d9a0;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:'Nunito', sans-serif;
+  background:var(--forest-deep);
+  color:var(--cream);
+  line-height:1.6;
+  min-height:100vh;
+}
+
+h1,h2,h3,.display{
+  font-family:'Changa One', sans-serif;
+  font-weight:400;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
+
+a{ color:var(--gold); }
+
+/* ============================================================
+   TOP NAV with dropdown menus
+   To add a new section later: copy one of the .nav-item blocks
+   in the HTML below and point its links at a new page id.
+   ============================================================ */
+.topbar{
+  position:sticky; top:0; z-index:50;
+  background:var(--wood-edge);
+  border-bottom:4px solid var(--wood-dark);
+  box-shadow:0 4px 12px rgba(0,0,0,.4);
+}
+.topbar-inner{
+  max-width:1100px; margin:0 auto;
+  display:flex; align-items:center; gap:.5rem;
+  padding:.6rem 1rem;
+  flex-wrap:wrap;
+}
+.brand{
+  font-family:'Changa One', sans-serif;
+  font-style:italic;
+  font-size:1.25rem;
+  color:var(--cream);
+  text-decoration:none;
+  text-shadow:2px 2px 0 var(--forest-deep);
+  margin-right:auto;
+  white-space:nowrap;
+}
+.brand span{ color:var(--gold); }
+
+.nav-item{ position:relative; }
+.nav-btn{
+  font-family:'Changa One', sans-serif;
+  font-size:.95rem;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  background:var(--wood-dark);
+  color:var(--cream);
+  border:2px solid var(--wood);
+  border-radius:6px;
+  padding:.45rem .9rem;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-block;
+  transition:transform .1s, background .15s;
+}
+.nav-btn:hover, .nav-btn:focus-visible{
+  background:var(--wood);
+  transform:translateY(-1px);
+}
+.nav-btn.play{
+  background:var(--badge-red);
+  border-color:#a32417;
+}
+.nav-btn.play:hover{ background:#e8503f; }
+
+.dropdown{
+  display:none;
+  position:absolute; top:calc(100% + 6px); left:0;
+  min-width:190px;
+  background:var(--wood-dark);
+  border:2px solid var(--wood);
+  border-radius:8px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,.5);
+}
+.nav-item:hover .dropdown,
+.nav-item:focus-within .dropdown{ display:block; }
+.dropdown a{
+  display:block;
+  padding:.55rem .9rem;
+  color:var(--cream);
+  text-decoration:none;
+  font-weight:700;
+  font-size:.9rem;
+  border-bottom:1px solid rgba(0,0,0,.25);
+}
+.dropdown a:last-child{ border-bottom:none; }
+.dropdown a:hover{ background:var(--wood); }
+.dropdown .soon{
+  color:var(--cream-dim);
+  font-weight:600;
+  font-style:italic;
+  cursor:default;
+}
+.dropdown .soon:hover{ background:transparent; }
+
+/* ============================================================
+   PAGES (hash routing shows one at a time)
+   ============================================================ */
+.page{ display:none; }
+.page.active{ display:block; }
+
+/* ============================================================
+   HERO, real key art with overlay
+   ============================================================ */
+.hero{
+  position:relative;
+  border-bottom:6px solid var(--forest);
+  background:#2b2b31;
+}
+.hero-art{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:70vh;
+  object-fit:cover;
+  object-position:center;
+}
+.hero-overlay{
+  position:absolute;
+  inset:auto 0 0 0;
+  padding:4rem 1rem 1.75rem;
+  text-align:center;
+  background:linear-gradient(transparent, rgba(0,0,0,.75));
+}
+.tagline{
+  font-size:clamp(1rem, 2.5vw, 1.25rem);
+  font-weight:800;
+  color:#fff;
+  text-shadow:0 2px 6px rgba(0,0,0,.8);
+}
+.hero-cta{
+  margin-top:1.6rem;
+  display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;
+}
+.btn{
+  font-family:'Changa One', sans-serif;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  font-size:1.1rem;
+  padding:.75rem 1.8rem;
+  border-radius:8px;
+  text-decoration:none;
+  border:3px solid var(--wood-edge);
+  box-shadow:0 4px 0 var(--wood-edge);
+  transition:transform .1s, box-shadow .1s;
+  display:inline-block;
+}
+.btn:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--wood-edge); }
+.btn-red{ background:var(--badge-red); color:#fff; }
+.btn-red:hover{ background:#e8503f; }
+.btn-wood{ background:var(--wood-dark); color:var(--cream); }
+.btn-wood:hover{ background:var(--wood); }
+
+.version-strip{
+  background:var(--forest-deep);
+  color:var(--cream-dim);
+  font-size:.85rem;
+  font-weight:700;
+  text-align:center;
+  padding:.4rem 1rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+}
+
+/* ============================================================
+   CONTENT SECTIONS
+   ============================================================ */
+.section{
+  max-width:1000px;
+  margin:0 auto;
+  padding:3rem 1.25rem;
+}
+.section h2{
+  font-size:2rem;
+  color:var(--gold);
+  text-shadow:2px 2px 0 rgba(0,0,0,.5);
+  margin-bottom:1.25rem;
+}
+.about-card{
+  background:var(--forest);
+  border:3px solid var(--wood-dark);
+  border-radius:14px;
+  padding:1.8rem 2rem;
+  font-size:1.08rem;
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
+}
+.about-card p + p{ margin-top:1rem; }
+
+/* Feature chips */
+.features{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:1rem;
+  margin-top:1.5rem;
+}
+.feature{
+  background:var(--wood-edge);
+  border:2px solid var(--wood-dark);
+  border-radius:10px;
+  padding:1rem 1.1rem;
+}
+.feature h3{
+  font-size:1.05rem;
+  color:var(--cream);
+  margin-bottom:.35rem;
+}
+.feature p{ font-size:.95rem; color:var(--cream-dim); }
+.keys{
+  font-family:'Changa One', sans-serif;
+  color:var(--gold);
+  letter-spacing:.15em;
+}
+
+/* ============================================================
+   TRAILER VIDEO EMBED (responsive 16:9)
+   ============================================================ */
+.video-frame{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:12px;
+  overflow:hidden;
+  border:4px solid var(--wood-dark);
+  box-shadow:0 8px 20px rgba(0,0,0,.45);
+  background:#000;
+}
+.video-frame iframe{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  border:0;
+}
+
+/* ============================================================
+   SCREENSHOT GALLERY (Steam-style)
+   One large 16:9 viewer, thumbnails below. Every image is
+   letterboxed inside the frame, never stretched or cropped.
+   ============================================================ */
+.gallery{ user-select:none; }
+.gallery-viewer{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#0d1409;
+  border:3px solid var(--wood-dark);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 8px 20px rgba(0,0,0,.45);
+}
+.gallery-viewer img{
+  width:100%; height:100%;
+  object-fit:contain;
+  cursor:zoom-in;
+}
+.gal-arrow{
+  position:absolute; top:0; bottom:0;
+  width:56px;
+  border:0;
+  background:linear-gradient(90deg, rgba(0,0,0,.45), transparent);
+  color:#fff;
+  font-size:2rem;
+  font-family:'Changa One', sans-serif;
+  cursor:pointer;
+  opacity:0;
+  transition:opacity .15s;
+}
+.gal-arrow.next{
+  right:0;
+  background:linear-gradient(270deg, rgba(0,0,0,.45), transparent);
+}
+.gal-arrow.prev{ left:0; }
+.gallery-viewer:hover .gal-arrow,
+.gal-arrow:focus-visible{ opacity:1; }
+.gallery-thumbs{
+  display:flex;
+  gap:.6rem;
+  margin-top:.75rem;
+  flex-wrap:wrap;
+}
+.gallery-thumbs img{
+  width:120px;
+  aspect-ratio:16/9;
+  object-fit:cover;
+  border-radius:6px;
+  border:3px solid transparent;
+  opacity:.55;
+  cursor:pointer;
+  transition:opacity .15s, border-color .15s;
+  background:#0d1409;
+}
+.gallery-thumbs img:hover{ opacity:.85; }
+.gallery-thumbs img.active{
+  opacity:1;
+  border-color:var(--gold);
+}
+.gallery-count{
+  position:absolute;
+  bottom:.6rem; right:.75rem;
+  background:rgba(0,0,0,.6);
+  color:var(--cream);
+  font-weight:800;
+  font-size:.8rem;
+  padding:.15rem .6rem;
+  border-radius:20px;
+  pointer-events:none;
+}
+
+/* ============================================================
+   LEADERBOARDS + WIKI placeholder pages
+   ============================================================ */
+.placeholder-hero{
+  min-height:55vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:3rem 1.25rem;
+  background:linear-gradient(var(--forest), var(--forest-deep));
+}
+.placeholder-hero h2{
+  font-size:clamp(2.2rem, 6vw, 3.6rem);
+  color:var(--gold);
+  text-shadow:3px 3px 0 rgba(0,0,0,.55);
+}
+.placeholder-hero p{
+  margin-top:1rem;
+  max-width:560px;
+  color:var(--cream-dim);
+  font-size:1.05rem;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer{
+  background:var(--wood-edge);
+  border-top:4px solid var(--wood-dark);
+  text-align:center;
+  padding:1.5rem 1rem;
+  font-size:.9rem;
+  color:var(--cream-dim);
+}
+footer a{ font-weight:800; }
+
+/* Lightbox */
+.lightbox{
+  display:none;
+  position:fixed; inset:0; z-index:100;
+  background:rgba(0,0,0,.9);
+  align-items:center; justify-content:center;
+  padding:2rem;
+  cursor:zoom-out;
+}
+.lightbox.open{ display:flex; }
+.lightbox img{
+  max-width:100%;
+  max-height:100%;
+  width:auto; height:auto;
+  border-radius:8px;
+}
+
+/* Keyboard focus */
+a:focus-visible, button:focus-visible{
+  outline:3px solid var(--gold);
+  outline-offset:2px;
+}
+
+@media (max-width:640px){
+  .brand{ width:100%; text-align:center; margin:0 0 .4rem; }
+  .topbar-inner{ justify-content:center; }
+  .gal-arrow{ opacity:1; width:44px; font-size:1.5rem; }
+  .gallery-thumbs img{ width:88px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     TOP NAVIGATION
+     Each nav item has a dropdown ready for expansion.
+     Add a new link inside a .dropdown, or copy a whole
+     .nav-item block to create a new menu.
+     ============================================================ -->
+<nav class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#home">BOUND <span>TO</span> DEFEND</a>
+
+    <div class="nav-item">
+      <a class="nav-btn" href="#home">Game</a>
+      <div class="dropdown">
+        <a href="#home">Overview</a>
+        <a href="#home-screenshots" onclick="showPage('home')">Screenshots</a>
+        <a class="soon">Patch Notes (soon)</a>
+        <a class="soon">Roadmap (soon)</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-btn" href="#leaderboards">Leaderboards</a>
+      <div class="dropdown">
+        <a href="#leaderboards">Coming Soon</a>
+        <a class="soon">Monthly Top 100 (soon)</a>
+        <a class="soon">Hall of Fame (soon)</a>
+      </div>
+    </div>
+
+    <div class="nav-item">
+      <a class="nav-btn" href="#wiki">Wiki</a>
+      <div class="dropdown">
+        <a href="#wiki">Wiki Home</a>
+        <a class="soon">Skills (soon)</a>
+        <a class="soon">Gear &amp; Loot (soon)</a>
+        <a class="soon">Enemies (soon)</a>
+      </div>
+    </div>
+
+    <a class="nav-btn play" href="https://bound-to-defend.itch.io/bound-to-defend" target="_blank" rel="noopener">Play on itch.io</a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     PAGE: HOME
+     ============================================================ -->
+<main>
+<section id="page-home" class="page active">
+
+  <div class="hero">
+    <img class="hero-art" src="screenshots/banner-gameplay.png" alt="Bound to Defend, the hero holding back a horde of orcs and skeletons">
+    <div class="hero-overlay">
+      <p class="tagline">Endless waves. Fresh builds every run. Loot that stays forever.</p>
+      <div class="hero-cta">
+        <a class="btn btn-red" href="https://bound-to-defend.itch.io/bound-to-defend" target="_blank" rel="noopener">Play Now on itch.io</a>
+        <a class="btn btn-wood" href="#home-trailer" onclick="showPage('home')">Watch the Trailer</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="version-strip">Active development</div>
+
+  <div class="section">
+    <h2>About the Game</h2>
+    <div class="about-card">
+      <p>Bound to Defend is an endless wave defense game that blends roguelite progression with persistent loot grinding. Every run starts from level 1. As you survive enemy waves, you'll level up and draft new skills, creating a different build each run.</p>
+      <p>Unlike a traditional roguelite, the gear you find doesn't disappear when you die. Weapons, armor and other loot are permanently saved, allowing you to upgrade, merge and sell equipment before your next attempt.</p>
+      <p>Combat is a hybrid of automatic attacks, passive abilities and manually cast skills using <span class="keys">Q, W, E, R</span> and <span class="keys">T</span>, letting you play actively or with a more relaxed approach. Runs can be saved and continued later, while the live cross-platform monthly leaderboard lets the Top 100 players compete for the highest score after every reset.</p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>Roguelite Runs</h3>
+        <p>Start at level 1 every run and draft new skills as you survive, so no two builds play the same.</p>
+      </div>
+      <div class="feature">
+        <h3>Loot That Stays</h3>
+        <p>Weapons and armor are saved permanently. Upgrade, merge and sell gear between attempts.</p>
+      </div>
+      <div class="feature">
+        <h3>Active or Relaxed</h3>
+        <p>Auto attacks and passives carry you, or take control with manual skills on <span class="keys">QWERT</span>.</p>
+      </div>
+      <div class="feature">
+        <h3>Monthly Top 100</h3>
+        <p>A live cross-platform leaderboard resets every month. Climb it before the timer runs out.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       TRAILER (YouTube embed)
+       To swap the video later, replace the video id after /embed/
+       ========================================================== -->
+  <div class="section" id="home-trailer">
+    <h2>Watch It in Action</h2>
+    <div class="video-frame">
+      <iframe
+        src="https://www.youtube.com/embed/mQm6aJgodL4"
+        title="Bound to Defend gameplay video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       SCREENSHOTS
+       To add a screenshot: drop the file into /screenshots and
+       add ONE line to the SHOTS list in the script at the bottom
+       of this file. The viewer and thumbnails build themselves.
+       ========================================================== -->
+  <div class="section" id="home-screenshots">
+    <h2>Screenshots</h2>
+    <div class="gallery">
+      <div class="gallery-viewer">
+        <img id="gal-main" src="" alt="" onclick="openLightbox(this)">
+        <button class="gal-arrow prev" aria-label="Previous screenshot" onclick="galStep(-1)">&lt;</button>
+        <button class="gal-arrow next" aria-label="Next screenshot" onclick="galStep(1)">&gt;</button>
+        <span class="gallery-count" id="gal-count"></span>
+      </div>
+      <div class="gallery-thumbs" id="gal-thumbs"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================
+     PAGE: LEADERBOARDS
+     ============================================================ -->
+<section id="page-leaderboards" class="page">
+  <div class="placeholder-hero">
+    <h2>Leaderboards<br><span style="font-size:.5em; color:var(--cream);">Coming Soon</span></h2>
+    <p>The monthly Top 100 will be displayed here soon. Until then, check the live leaderboard in-game.</p>
+    <div class="hero-cta">
+      <a class="btn btn-red" href="https://bound-to-defend.itch.io/bound-to-defend" target="_blank" rel="noopener">Compete Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PAGE: WIKI
+     ============================================================ -->
+<section id="page-wiki" class="page">
+  <div class="placeholder-hero">
+    <h2>Wiki</h2>
+    <p>Guides on skills, gear, merging and enemies are coming soon. Content will be added as the game grows.</p>
+    <div class="hero-cta">
+      <a class="btn btn-wood" href="#home">Back to Home</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Bound to Defend, in active development.
+  <a href="https://bound-to-defend.itch.io/bound-to-defend" target="_blank" rel="noopener">Play it on itch.io</a></p>
+</footer>
+
+<!-- Lightbox for full-size screenshots -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('open')">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+/* Lightbox: click a screenshot to view it full size, click anywhere to close */
+function openLightbox(img){
+  const lb = document.getElementById('lightbox');
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox-img').alt = img.alt;
+  lb.classList.add('open');
+}
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+});
+
+/* ============================================================
+   Simple hash routing: #home, #leaderboards, #wiki
+   To add a page: create a <section id="page-yourname" class="page">
+   and link to #yourname from the nav.
+   ============================================================ */
+function showPage(name){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + name);
+  (target || document.getElementById('page-home')).classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function route(){
+  const hash = location.hash.replace('#','') || 'home';
+  if(hash === 'home-screenshots' || hash === 'home-trailer'){
+    showPage('home');
+    const el = document.getElementById(hash);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+    return;
+  }
+  showPage(hash);
+}
+window.addEventListener('hashchange', route);
+route();
+
+/* ============================================================
+   SCREENSHOT GALLERY
+   To add a screenshot, add one line to this list:
+   { src: 'screenshots/your-file.png', alt: 'Describe it' },
+   ============================================================ */
+const SHOTS = [
+  { src: 'screenshots/cover-art.png',       alt: 'Bound to Defend cover art, the hero before and after gearing up' },
+  { src: 'screenshots/screenshot-1.png',    alt: 'Main menu in the forest' },
+  { src: 'screenshots/banner-gameplay.png', alt: 'Gameplay, holding back a horde of orcs and skeletons' },
+];
+
+let galIndex = 0;
+const galMain   = document.getElementById('gal-main');
+const galThumbs = document.getElementById('gal-thumbs');
+const galCount  = document.getElementById('gal-count');
+
+function galShow(i){
+  galIndex = (i + SHOTS.length) % SHOTS.length;
+  galMain.src = SHOTS[galIndex].src;
+  galMain.alt = SHOTS[galIndex].alt;
+  galCount.textContent = (galIndex + 1) + ' / ' + SHOTS.length;
+  galThumbs.querySelectorAll('img').forEach((t, n) =>
+    t.classList.toggle('active', n === galIndex));
+}
+function galStep(dir){ galShow(galIndex + dir); }
+
+/* Build thumbnails once */
+SHOTS.forEach((shot, n) => {
+  const t = document.createElement('img');
+  t.src = shot.src;
+  t.alt = shot.alt;
+  t.loading = 'lazy';
+  t.addEventListener('click', () => galShow(n));
+  galThumbs.appendChild(t);
+});
+galShow(0);
+
+/* Arrow keys navigate the gallery when it's on screen */
+document.addEventListener('keydown', e => {
+  if(document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key === 'ArrowLeft')  galStep(-1);
+  if(e.key === 'ArrowRight') galStep(1);
+});
+</script>
+
+</body>
+</html>
