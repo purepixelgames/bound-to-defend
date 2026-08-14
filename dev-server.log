@@ -750,3 +750,11 @@ chunk-QVCW2UIM.js   | home  | 33.32 kB |
 Application bundle generation complete. [0.155 seconds] - 2026-08-14T10:41:27.214Z
 
 Component update sent to client(s).
+❯ Changes detected. Rebuilding...
+✔ Changes detected. Rebuilding...
+
+No output file changes.
+
+Application bundle generation complete. [0.006 seconds] - 2026-08-14T10:46:35.346Z
+
+Page reload sent to client(s).
