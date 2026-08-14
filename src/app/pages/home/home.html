@@ -1,0 +1,92 @@
+<section>
+  <!-- ================= HERO ================= -->
+  <div class="hero">
+    <img
+      class="hero-art"
+      src="screenshots/newest/cropped2.png"
+      alt="Bound to Defend, the hero holding back a horde of orcs and skeletons"
+    >
+    <div class="hero-overlay">
+      <p class="hero-tag">Endless waves. Fresh builds every run. Loot that stays forever.</p>
+      <div class="hero-cta">
+        <a class="btn btn-red" href="{{ itchUrl }}" target="_blank" rel="noopener">Play Now on itch.io</a>
+        <a class="btn btn-wood" href="#trailer">Watch the Trailer</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="version-strip">In active development</div>
+
+  <!-- ================= ABOUT ================= -->
+  <div class="section container">
+    <div class="section-head">
+      <h2 class="section-title centering-title">About the <span class="accent">Game</span></h2>
+    </div>
+
+    <div class="about-card card">
+      <p>
+        Bound to Defend is an endless wave defense game that blends roguelite progression with
+        persistent loot grinding. Every run starts from level 1. As you survive enemy waves, you'll
+        level up and draft new skills, creating a different build each run.
+      </p>
+      <p>
+        Unlike a traditional roguelite, the gear you find doesn't disappear when you die. Weapons,
+        armor and other loot are permanently saved, allowing you to upgrade, merge and sell equipment
+        before your next attempt.
+      </p>
+      <p>
+        Combat is a hybrid of automatic attacks, passive abilities and manually cast skills using
+        <span class="keys">Q</span> <span class="keys">W</span> <span class="keys">E</span>
+        <span class="keys">R</span> and <span class="keys">T</span>, letting you play actively or with a
+        more relaxed approach. Runs can be saved and continued later, while the live cross-platform
+        monthly leaderboard lets the Top 100 players compete for the highest score after every reset.
+      </p>
+    </div>
+
+    <div class="features">
+      @for (feature of features; track feature.title) {
+        <div class="feature card">
+          <span class="feature-icon" aria-hidden="true">{{ feature.icon }}</span>
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+
+
+
+  <!-- ================= SCREENSHOTS ================= -->
+  <div class="section container">
+    <div class="section-head">
+      <h2 class="section-title">Screenshots</h2>
+      <p class="section-sub">Click a shot to view it full size — or use the arrow keys to flip through.</p>
+    </div>
+    <app-gallery />
+  </div>
+
+
+
+
+
+
+
+  <!-- ================= TRAILER ================= -->
+  <div class="section container" id="trailer">
+    <div class="section-head">
+      <h2 class="section-title">Watch It in  <span class="accent">Action</span>   (v0.0.4)</h2>
+    </div>
+    <div class="video-frame card">
+      <iframe
+        [src]="trailerUrl"
+        title="Bound to Defend gameplay video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+  </div>
+
+
+
+</section>

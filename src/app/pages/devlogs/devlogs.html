@@ -1,0 +1,31 @@
+<section>
+  <div class="page-hero">
+    <h1>Devlogs</h1>
+    <p>
+      Patch notes and behind-the-scenes updates straight from development.
+    </p>
+  </div>
+
+  <div class="section container">
+    <div class="devlog-list">
+      @for (entry of entries; track entry.version) {
+        <article class="devlog card">
+          <header class="devlog-head">
+            <span class="devlog-version">{{ entry.version }}</span>
+            @if (entry.date) {
+              <span class="devlog-date">{{ entry.date }}</span>
+            }
+          </header>
+          @if (entry.title) {
+            <h2>{{ entry.title }}</h2>
+          }
+          <ul class="devlog-body">
+            @for (line of bodyLines(entry.body); track $index) {
+              <li [class.devlog-heading]="line.heading">{{ line.text }}</li>
+            }
+          </ul>
+        </article>
+      }
+    </div>
+  </div>
+</section>

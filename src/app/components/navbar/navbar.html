@@ -1,0 +1,36 @@
+<header class="topbar">
+  <div class="topbar-inner container">
+    <a class="brand" routerLink="/" (click)="closeMenu()" aria-label="Bound to Defend home">
+      Bound to <span>Defend</span>
+    </a>
+
+    <div class="corner-tag">
+      <span class="corner-version">v0.1.1 <span class="live">(live)</span></span>
+    </div>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Toggle navigation menu"
+      (click)="toggleMenu()"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav" [class.open]="menuOpen()" aria-label="Main navigation">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        (click)="closeMenu()"
+      >Home</a>
+      <a routerLink="/devlogs" routerLinkActive="active" (click)="closeMenu()">Devlogs</a>
+      <a routerLink="/leaderboards" routerLinkActive="active" (click)="closeMenu()">Leaderboards</a>
+      <a routerLink="/wiki" routerLinkActive="active" (click)="closeMenu()">Wiki</a>
+      <a class="nav-play" href="{{ itchUrl }}" target="_blank" rel="noopener" (click)="closeMenu()">Play on itch.io</a>
+    </nav>
+  </div>
+</header>

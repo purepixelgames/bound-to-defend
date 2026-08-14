@@ -1,0 +1,63 @@
+.site-footer {
+  margin-top: 3rem;
+  background: linear-gradient(180deg, var(--night), var(--forest-deep));
+  border-top: 3px solid var(--wood-dark);
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  padding-block: 2.25rem;
+}
+
+.footer-brand .brand {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--cream);
+  text-shadow: 2px 2px 0 var(--forest-deep);
+}
+
+.footer-brand .brand span {
+  color: var(--gold);
+}
+
+.footer-brand p {
+  margin-top: 0.35rem;
+  color: var(--cream-dim);
+  font-size: 0.95rem;
+  max-width: 34ch;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+}
+
+.footer-nav a {
+  color: var(--cream-dim);
+  text-decoration: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+}
+
+.footer-nav a:hover {
+  color: var(--gold);
+}
+
+.footer-bottom {
+  border-top: 1px solid var(--wood-edge);
+  padding-block: 0.9rem;
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: var(--cream-dim);
+  font-size: 0.82rem;
+}

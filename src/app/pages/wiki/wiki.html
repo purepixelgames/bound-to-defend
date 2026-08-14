@@ -1,0 +1,22 @@
+<section>
+  <div class="page-hero">
+    <span class="badge-soon">Coming soon</span>
+    <h1>Wiki</h1>
+    <p>
+      Guides on skills, gear, merging and enemies are on the way. Content will be added as the game grows.
+    </p>
+  </div>
+
+  <div class="section container">
+    <div class="wiki-grid">
+      @for (section of sections; track section.title) {
+        <div class="wiki-card card">
+          <span class="wiki-icon" aria-hidden="true">{{ section.icon }}</span>
+          <h2>{{ section.title }}</h2>
+          <p>{{ section.description }}</p>
+          <span class="wiki-soon">Coming soon</span>
+        </div>
+      }
+    </div>
+  </div>
+</section>

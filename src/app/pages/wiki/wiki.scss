@@ -1,0 +1,54 @@
+.wiki-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.wiki-card {
+  padding: 1.6rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.wiki-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-pop);
+}
+
+.wiki-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  font-size: 1.6rem;
+  background: var(--wood-edge);
+  border: 2px solid var(--wood-dark);
+  border-radius: 14px;
+}
+
+.wiki-card h2 {
+  font-size: 1.15rem;
+  color: var(--gold);
+}
+
+.wiki-card p {
+  color: var(--cream-dim);
+  font-size: 0.95rem;
+}
+
+.wiki-soon {
+  margin-top: auto;
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--grass);
+  background: var(--grass-glow);
+  border: 1px solid var(--grass-dark);
+  border-radius: 999px;
+  padding: 0.22rem 0.7rem;
+}

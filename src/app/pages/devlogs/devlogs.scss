@@ -1,0 +1,77 @@
+.devlog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.devlog {
+  padding: 1.6rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.devlog:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-pop);
+}
+
+.devlog-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.devlog-version {
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--grass);
+  background: var(--grass-glow);
+  border: 1px solid var(--grass-dark);
+  border-radius: 999px;
+  padding: 0.22rem 0.7rem;
+}
+
+.devlog-date {
+  font-weight: 700;
+  color: var(--cream-dim);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.devlog h2 {
+  font-size: 1.2rem;
+  color: var(--gold);
+}
+
+.devlog-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: disc inside;
+}
+
+.devlog-body li {
+  text-align: center;
+  color: var(--cream-dim);
+  font-size: 0.98rem;
+}
+
+.devlog-body li.devlog-heading {
+  list-style: none;
+  margin-top: 0.3rem;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--gold);
+}
